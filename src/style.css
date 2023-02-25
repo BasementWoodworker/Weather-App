@@ -53,11 +53,14 @@ body {
 
 /* Search Bar */
 .search-container {
+  display: flex;
+  align-items: center;
   background-color: var(--my-background);
   border: 2px solid var(--grey);
   padding: 20px 40px;
+  padding-right: 30px;
   border-radius: 32px;
-  width: 555px;
+  width: min-content;
   margin: auto;
 }
 
