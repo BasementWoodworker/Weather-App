@@ -41,6 +41,8 @@ DOM.searchButton.addEventListener("click", async () => {
     DOM.locationInput.value = "";
 });
 
+// Comfort Features
 window.addEventListener("keyup", (event) => {
   if (event.key === "Enter") DOM.searchButton.click();
 })
+window.addEventListener("load", () => DOM.locationInput.focus());
