@@ -49,10 +49,27 @@ label.toggle-units {
   left: 0px;
 }
 
-input.toggle-units {
+div.toggle-units {
   position: absolute;
   top: 0px;
-  left: 0px
+  left: 0px;
+  height: 30px;
+  width: 70px;
+  background-color: white;
+}
+
+div.toggle-units > div {
+  position: absolute;
+  right: 40px;
+  height: 25px;
+  width: 25px;
+  border-radius: 50%;
+  background-color: grey;
+  transition: 0.25s;
+}
+
+div.toggle-units.changed > div {
+  right: 0;
 }
 
 .location-name {

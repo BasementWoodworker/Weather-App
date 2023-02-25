@@ -24,21 +24,20 @@ function showWeather(data) {
   const locationName = createElem("div", {Class: "location-name", Content: data.locationName});
   const weather = createElem("div", {Class: "weather", Content: data.weather});
   const weatherIcon = createElem("img", {Class: "weather-icon"});
-  const temperature = createElem("div", {Class: "temperature", Content: data.temp});
-  const temperatureFeels = createElem("div", {Class: "temperature-feels", Content: data.tempFeels});
+  const temperature = createElem("div", {Class: "temperature", Content: `${data.temp}°C`});
+  const temperatureFeels = createElem("div", {Class: "temperature-feels", Content: `Feels like ${data.tempFeels}°C`});
   const wind = createElem("div", {Class: "wind", Content: `Wind: ${data.wind} km/h`});
-  const humidity = createElem("div", {Class: "humidity", Content: `Humidity: ${data.humidity}`});
-  const toggleUnitsLabel = createElem("label", {Class: "toggle-units", Content: "°C"});
-  const toggleUnits = createElem("input", {Class: "toggle-units"});
+  const humidity = createElem("div", {Class: "humidity", Content: `Humidity: ${data.humidity}%`});
+  const toggleUnitsLabel = createElem("label", {Class: "toggle-units", Content: "METRIC"});
+  const toggleUnits = createElem("div", {Class: "toggle-units"});
+  const toggleUnitsChild = createElem("div", {Class: "toggle-units-child"});
   const circle = createElem("img", {Class: "weather-circle"});
   const leftSide = createElem("div", {Class: "left-side"});
   const rightSide = createElem("div", {Class: "right-side"});
 
   circle.src = circleImg;
   circle.style.color = "red";
-  toggleUnitsLabel.setAttribute("for", "toggle-units");
-  toggleUnits.setAttribute("type", "checkbox");
-  toggleUnits.setAttribute("id", "toggle-units");
+  toggleUnits.appendChild(toggleUnitsChild);
   weatherIcon.src = data.iconURL;
 
   main.append(weatherContainer);
@@ -62,15 +61,16 @@ function showWeather(data) {
   )
 
   toggleUnits.addEventListener("click", () => {
-    if (toggleUnitsLabel.textContent === "°C") {
-      toggleUnitsLabel.textContent = "°F";
+    toggleUnits.classList.toggle("changed");
+    if (toggleUnitsLabel.textContent === "METRIC") {
+      toggleUnitsLabel.textContent = "IMPERIAL";
       temperature.textContent = convert.toFahrenheit(temperature.textContent);
-      temperatureFeels.textContent = convert.toFahrenheit(temperatureFeels.textContent);
+      temperatureFeels.textContent = "Feels like " + convert.toFahrenheit(temperatureFeels.textContent);
       wind.textContent = convert.toMph(wind.textContent);
     } else {
-      toggleUnitsLabel.textContent = "°C";
+      toggleUnitsLabel.textContent = "METRIC";
       temperature.textContent = convert.toCelsius(temperature.textContent);
-      temperatureFeels.textContent = convert.toCelsius(temperatureFeels.textContent);
+      temperatureFeels.textContent = "Feels like " + convert.toCelsius(temperatureFeels.textContent);
       wind.textContent = convert.toKmh(wind.textContent);
     }
   })
