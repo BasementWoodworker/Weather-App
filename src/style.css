@@ -70,19 +70,8 @@ body {
 
 .location-input {
   width: 400px;
-  border-top-left-radius: 16px;
-  border-bottom-left-radius: 16px;
+  border-radius: 16px;
   outline: none;
-}
-
-.search-button {
-  display: inline-block;
-  position: relative;
-  top: 1px;
-  height: 65px;
-  background-color: lightgrey;
-  border-top-right-radius: 16px;
-  border-bottom-right-radius: 16px;
 }
 
 .search-symbol {
@@ -90,10 +79,11 @@ body {
   transition: 0.25s;
   left: 0;
   user-select: none;
+  color: white;
 }
 
 .search-button:active > .search-symbol {
-  left: 10px;
+  left: 12px;
 }
 
 /* Weather Display */
