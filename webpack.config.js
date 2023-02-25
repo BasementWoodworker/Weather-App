@@ -21,7 +21,9 @@ module.exports = {
     ],
   },
   plugins: [
-    new HtmlWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      title: 'Weather App'
+    }),
   ],
   devServer: {
     static: './dist',
