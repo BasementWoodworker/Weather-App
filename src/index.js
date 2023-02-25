@@ -20,13 +20,19 @@ function extractWeatherData(rawData) {
   result.humidity = rawData.main.humidity;
   result.wind = Math.round(rawData.wind.speed);
   result.weather = rawData.weather[0].main;
-  result.iconURL = `https://openweathermap.org/img/wn/${rawData.weather[0].icon}@2x.png`;
+  result.iconURL = `https://openweathermap.org/img/wn/${rawData.weather[0].icon}@4x.png`;
+  result.time = (rawData.weather[0].icon[2] === "d") ? "day" : "night";
   return result;
 }
 
 DOM.searchButton.addEventListener("click", async () => {
   const rawData = await getWeather(DOM.locationInput.value);
   const processedData = extractWeatherData(rawData);
+  DOM.clearWeather();
   DOM.showWeather(processedData);
   DOM.locationInput.value = "";
 });
+
+window.addEventListener("keyup", (event) => {
+  if (event.key === "Enter") DOM.searchButton.click();
+})

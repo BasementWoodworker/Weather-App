@@ -2,8 +2,22 @@ import createElem from "./create-element-custom-function.js";
 import convert from "./unit-conversion.js";
 import circleImg from "../assets/images/circle.svg";
 
-const startingBackground_Url = "https://images.unsplash.com/photo-1472552944129-b035e9ea3744?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80"
+function Color(filterColor, normalColor) {
+  this.filterColor = filterColor;
+  this.normalColor = normalColor;
+}
 
+const startingBackground_Url = "https://images.unsplash.com/photo-1472552944129-b035e9ea3744?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80";
+const veryCold = new Color("invert(62%) sepia(91%) saturate(552%) hue-rotate(180deg) brightness(103%) contrast(98%)", "#73bffd");
+const cold = new Color("invert(71%) sepia(92%) saturate(1240%) hue-rotate(180deg) brightness(104%) contrast(102%)", "#86c9ff");
+const cool = new Color("invert(85%) sepia(56%) saturate(606%) hue-rotate(178deg) brightness(105%) contrast(103%)", "#cbe7ff");
+const warmish = new Color("invert(96%) sepia(7%) saturate(3537%) hue-rotate(307deg) brightness(107%) contrast(101%)", "#ffd4a3");
+const warm = new Color("invert(75%) sepia(27%) saturate(914%) hue-rotate(335deg) brightness(104%) contrast(101%)", "#ffbb6e");
+const hot = new Color("invert(62%) sepia(76%) saturate(1553%) hue-rotate(344deg) brightness(102%) contrast(104%)", "#ff941b");
+const veryHot = new Color("invert(55%) sepia(51%) saturate(3333%) hue-rotate(346deg) brightness(99%) contrast(105%)", "#ff6f1b");
+let infoPresent = false;
+
+// Initial page build
 const body = document.body;
 const main = document.createElement("main");
 const searchContainer = createElem("div", {Class: "search-container"});
@@ -19,9 +33,11 @@ searchContainer.append(
 )
 body.style.backgroundImage = `url(${startingBackground_Url})`;
 
+// Functions
 function showWeather(data) {
   const weatherContainer = createElem("div", {Class: "weather-container"});
   const locationName = createElem("div", {Class: "location-name", Content: data.locationName});
+  const line = createElem("div", {Class: "line"});
   const weather = createElem("div", {Class: "weather", Content: data.weather});
   const weatherIcon = createElem("img", {Class: "weather-icon"});
   const temperature = createElem("div", {Class: "temperature", Content: `${data.temp}°C`});
@@ -36,13 +52,16 @@ function showWeather(data) {
   const rightSide = createElem("div", {Class: "right-side"});
 
   circle.src = circleImg;
-  circle.style.color = "red";
+  
   toggleUnits.appendChild(toggleUnitsChild);
   weatherIcon.src = data.iconURL;
+  if (data.time === "day") weatherIcon.classList.add("day");
+  else weatherIcon.classList.add("night");
 
   main.append(weatherContainer);
   weatherContainer.append(
     locationName,
+    line,
     leftSide,
     rightSide,
     toggleUnitsLabel,
@@ -55,8 +74,8 @@ function showWeather(data) {
   )
   rightSide.append(
     weatherIcon,
-    weather,
     humidity,
+    weather,
     wind
   )
 
@@ -74,10 +93,32 @@ function showWeather(data) {
       wind.textContent = convert.toKmh(wind.textContent);
     }
   })
+
+  setTemperatureColor(circle, temperature, data.temp);
+
+  infoPresent = true;
+}
+
+function clearWeather() {
+  if (infoPresent) main.removeChild(main.lastChild);
+}
+
+function setTemperatureColor(circle, temperatureElem, temperature) {
+  let color;
+  if (temperature > 35) color = veryHot;
+  else if (temperature > 25) color = hot;
+  else if (temperature > 20) color = warm;
+  else if (temperature > 15) color = warmish;
+  else if (temperature > 5) color = cool;
+  else if (temperature > -10) color = cold;
+  else color = veryCold;
+  circle.style.filter = color.filterColor;
+  temperatureElem.style.color = color.normalColor;
 }
 
 export default {
   locationInput,
   searchButton,
-  showWeather
+  showWeather,
+  clearWeather
 }
