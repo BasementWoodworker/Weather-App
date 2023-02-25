@@ -15,11 +15,12 @@ async function getWeather(location) {
 function extractWeatherData(rawData) {
   const result = {};
   result.locationName = rawData.name;
-  result.temp = rawData.main.temp;
-  result.tempFeels = rawData.main.feels_like;
+  result.temp = Math.round(rawData.main.temp);
+  result.tempFeels = Math.round(rawData.main.feels_like);
   result.humidity = rawData.main.humidity;
-  result.wind = rawData.wind.speed;
+  result.wind = Math.round(rawData.wind.speed);
   result.weather = rawData.weather[0].main;
+  result.iconURL = `https://openweathermap.org/img/wn/${rawData.weather[0].icon}@2x.png`;
   return result;
 }
 
@@ -27,4 +28,5 @@ DOM.searchButton.addEventListener("click", async () => {
   const rawData = await getWeather(DOM.locationInput.value);
   const processedData = extractWeatherData(rawData);
   DOM.showWeather(processedData);
+  DOM.locationInput.value = "";
 });
