@@ -1,13 +1,13 @@
 import createElem from "./create-element-custom-function.js";
 import convert from "./unit-conversion.js";
 import circleImg from "../assets/images/circle.svg";
+import backgroundImg from "../assets/images/background.jpg"
 
 function Color(filterColor, normalColor) {
   this.filterColor = filterColor;
   this.normalColor = normalColor;
 }
 
-const startingBackground_Url = "https://images.unsplash.com/photo-1472552944129-b035e9ea3744?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1887&q=80";
 const veryCold = new Color("invert(62%) sepia(91%) saturate(552%) hue-rotate(180deg) brightness(103%) contrast(98%)", "#73bffd");
 const cold = new Color("invert(71%) sepia(92%) saturate(1240%) hue-rotate(180deg) brightness(104%) contrast(102%)", "#86c9ff");
 const cool = new Color("invert(85%) sepia(56%) saturate(606%) hue-rotate(178deg) brightness(105%) contrast(103%)", "#cbe7ff");
@@ -31,7 +31,7 @@ searchContainer.append(
   locationInput,
   searchButton
 )
-body.style.backgroundImage = `url(${startingBackground_Url})`;
+body.style.backgroundImage = `url(${backgroundImg})`;
 
 // Functions
 function showWeather(data) {
@@ -116,9 +116,17 @@ function setTemperatureColor(circle, temperatureElem, temperature) {
   temperatureElem.style.color = color.normalColor;
 }
 
+function showErrorMessage(errorText) {
+  const error = createElem("div", {Class: "error", Content: errorText});
+  body.appendChild(error);
+  setTimeout(()=>error.classList.add("shown"), 100);
+  setTimeout(() => body.removeChild(body.lastChild), 3000);
+}
+
 export default {
   locationInput,
   searchButton,
   showWeather,
-  clearWeather
+  clearWeather,
+  showErrorMessage
 }

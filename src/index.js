@@ -2,14 +2,18 @@ import "./style.css";
 import DOM from "./modules/DOM.js";
 
 async function getWeather(location) {
-  const response = await fetch(
-    `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=8aa42f3c2e81314f17d3da99b65a61f9`,
-    {mode: "cors"}
-  );
-  console.log(response);
-  const rawWeatherData = await response.json();
-  console.log(rawWeatherData);
-  return rawWeatherData;
+  try {
+    const response = await fetch(
+      `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=8aa42f3c2e81314f17d3da99b65a61f9`,
+      {mode: "cors"}
+    );
+    console.log(response);
+    const rawWeatherData = await response.json();
+    console.log(rawWeatherData);
+    return rawWeatherData;
+  } catch(err) {
+    DOM.showErrorMessage("Network Error");
+  }
 }
 
 function extractWeatherData(rawData) {
@@ -26,11 +30,15 @@ function extractWeatherData(rawData) {
 }
 
 DOM.searchButton.addEventListener("click", async () => {
-  const rawData = await getWeather(DOM.locationInput.value);
-  const processedData = extractWeatherData(rawData);
-  DOM.clearWeather();
-  DOM.showWeather(processedData);
-  DOM.locationInput.value = "";
+    const rawData = await getWeather(DOM.locationInput.value);
+    if (rawData.cod === "404") {
+      DOM.showErrorMessage("Location not found");
+      return;
+    }
+    const processedData = extractWeatherData(rawData);
+    DOM.clearWeather();
+    DOM.showWeather(processedData);
+    DOM.locationInput.value = "";
 });
 
 window.addEventListener("keyup", (event) => {
