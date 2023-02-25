@@ -25,6 +25,14 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  background-size: cover;
+}
+
+.intro {
+  color: white;
+  font-size: 48px;
+  font-weight: 100;
+  margin: 10px;
 }
 
 .error {
@@ -43,25 +51,52 @@ body {
   top: 100px;
 }
 
+/* Search Bar */
 .search-container {
   background-color: var(--my-background);
   border: 2px solid var(--grey);
   padding: 20px 40px;
   border-radius: 32px;
-  width: 550px;
+  width: 551px;
   margin: auto;
-}
-
-.location-input {
-  width: 400px;
 }
 
 .location-input,
 .search-button {
   font-size: 48px;
   padding: 5px 10px;
+  border: none;
 }
 
+.location-input {
+  width: 400px;
+  border-top-left-radius: 16px;
+  border-bottom-left-radius: 16px;
+  outline: none;
+}
+
+.search-button {
+  display: inline-block;
+  position: relative;
+  top: 1px;
+  height: 65px;
+  background-color: lightgrey;
+  border-top-right-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.search-symbol {
+  position: relative;
+  transition: 0.25s;
+  left: 0;
+  user-select: none;
+}
+
+.search-button:active > .search-symbol {
+  left: 10px;
+}
+
+/* Weather Display */
 .weather-container {
   position: relative;
   display: grid;
@@ -77,6 +112,7 @@ body {
   width: 950px;
 }
 
+/* Top */
 .location-name {
   position: relative;
   bottom: 10px;
@@ -121,6 +157,7 @@ div.toggle-units > div {
   left: 4px;
   height: 25px;
   width: 25px;
+  border: 5px solid rgb(85, 85, 85);
   border-radius: 50%;
   background-color: rgb(99, 99, 99);
   transition: 0.25s;
@@ -139,9 +176,9 @@ div.toggle-units.changed > div {
 
 .temperature {
   position: absolute;
-  bottom: 148px;
-  left: 90px;
-  font-size: 65px;
+  bottom: 155px;
+  left: 95px;
+  font-size: 50px;
   font-weight: bold;
 }
 
@@ -149,7 +186,7 @@ div.toggle-units.changed > div {
   position: absolute;
   left: 40px;
   bottom: 20px;
-  font-size: 40px;
+  font-size: 30px;
 }
 
 /* Right Side */
@@ -165,7 +202,7 @@ div.toggle-units.changed > div {
 }
 
 .weather-icon.day {
-  background-color: rgb(129, 223, 255);
+  background-color: rgb(184, 229, 255);
 }
 
 .weather-icon.night {

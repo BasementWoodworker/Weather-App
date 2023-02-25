@@ -7,9 +7,7 @@ async function getWeather(location) {
       `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=8aa42f3c2e81314f17d3da99b65a61f9`,
       {mode: "cors"}
     );
-    console.log(response);
     const rawWeatherData = await response.json();
-    console.log(rawWeatherData);
     return rawWeatherData;
   } catch(err) {
     DOM.showErrorMessage("Network Error");
@@ -29,7 +27,9 @@ function extractWeatherData(rawData) {
   return result;
 }
 
+// Main logic
 DOM.searchButton.addEventListener("click", async () => {
+    if (DOM.locationInput.value === "") return;
     const rawData = await getWeather(DOM.locationInput.value);
     if (rawData.cod === "404") {
       DOM.showErrorMessage("Location not found");

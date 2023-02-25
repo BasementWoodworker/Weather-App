@@ -20,17 +20,22 @@ let infoPresent = false;
 // Initial page build
 const body = document.body;
 const main = document.createElement("main");
+const intro = createElem("h1", {Class: "intro", Content: "Know weather in:"});
 const searchContainer = createElem("div", {Class: "search-container"});
 const locationInput = createElem("input", {Class: "location-input"});
-const searchButton = createElem("button", {Class: "search-button", Content: "➡"});
-locationInput.setAttribute("value", "London");
+const searchButton = createElem("span", {Class: "search-button"});
+const searchSymbol = createElem("span", {Class: "search-symbol", Content: "➡"})
 locationInput.setAttribute("placeholder", "...");
-body.appendChild(main);
+body.append(
+  intro, 
+  main
+);
 main.appendChild(searchContainer);
 searchContainer.append(
   locationInput,
   searchButton
 )
+searchButton.appendChild(searchSymbol);
 body.style.backgroundImage = `url(${backgroundImg})`;
 
 // Functions
@@ -95,7 +100,11 @@ function showWeather(data) {
   })
 
   setTemperatureColor(circle, temperature, data.temp);
-
+  intro.remove();
+  if (body.lastChild.classList.contains("error")) {
+    body.lastChild.remove();
+  }
+  
   infoPresent = true;
 }
 
@@ -119,8 +128,8 @@ function setTemperatureColor(circle, temperatureElem, temperature) {
 function showErrorMessage(errorText) {
   const error = createElem("div", {Class: "error", Content: errorText});
   body.appendChild(error);
-  setTimeout(()=>error.classList.add("shown"), 100);
-  setTimeout(() => body.removeChild(body.lastChild), 3000);
+  setTimeout(() => error.classList.add("shown"), 100);
+  setTimeout(() => error.remove(), 3000);
 }
 
 export default {
