@@ -1,0 +1,37 @@
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --my-background: rgba(0, 0, 0, 0.5)
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  display: grid;
+  place-items: center;
+}
+
+.search-container {
+  background-color: var(--my-background);
+  padding: 40px 80px;
+  border-radius: 32px;
+}
+
+.location-input,
+.search-button {
+  font-size: 48px;
+  padding: 5px 10px;
+}
+
+.weather-container {
+  background-color: var(--my-background);
+  color: white;
+  font-size: 24px;
+}
